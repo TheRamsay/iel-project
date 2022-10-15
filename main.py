@@ -118,7 +118,7 @@ def third():
     print(f"{IZ=}")
     print(f"{G1=}")
     print(f"{G2=}")
-    print(f"{G4=}")
+    print(f"{G3=}")
     print(f"{G4=}")
     print(f"{G5=}")
     print(f"{UA=}")
@@ -127,5 +127,22 @@ def third():
     print(f"{UR4=}")
     print(f"{IR4=}")
     print(f"{X=}")
+
+    A = np.array([
+        [-G1 - G2 - G3, G2, 0],
+        [G2, -G2 - G4, G4],
+        [0, G4, -G4 - G5]
+    ])
+
+    B = np.array([
+        [-IZ],
+        [I2],
+        [I1 - I2]
+    ])
+    print(f"{-G1 - G2 - G3=}")
+    print(f"{-G2 - G4=}")
+    print(f"{-G4 - G5=}")
+    print(f"{-IZ=}")
+    print(f"{I1 - I2=}")
 
 third()
