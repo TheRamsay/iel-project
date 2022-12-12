@@ -128,4 +128,12 @@ def third():
     print(f"{IR4=}")
     print(f"{X=}")
 
-third()
+def fifth():
+    U = 8
+    L = 50
+    R = 40
+    T = 0
+    START = 4
+
+    K_d = U / L * e ** (-R/L * T)
+    K_d = U / L * e ** (-R/L * T)
