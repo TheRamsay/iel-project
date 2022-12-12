@@ -168,24 +168,40 @@ def problem_3(u, i1, i2, r1, r2, r3, r4, r5):
         [i2],
         [i1 - i2]
     ])
-    print(f"{-g1 - g2 - g3=}")
-    print(f"{-g2 - g4=}")
-    print(f"{-g4 - g5=}")
-    print(f"{-iz=}")
-    print(f"{i1 - i2=}")
+
+    x = np.linalg.solve(a, b)
+    ua, ub, uc = [i[0] for i in x]
+
+    ur4 = ub - uc
+    ir4 = g4 * ur4
+
+    print(f"{iz=}")
+    print(f"{g1=}")
+    print(f"{g2=}")
+    print(f"{g4=}")
+    print(f"{g4=}")
+    print(f"{g5=}")
+    print(f"{x=}")
+    print(f"{ua=}")
+    print(f"{ub=}")
+    print(f"{uc=}")
+    print(f"{ur4=}")
+    print(f"{ir4=}")
 
 def problem_4(u1, u2, r1, r2, l1, l2, c1, c2, f):
     print('Not implemented yet')
 
 def problem_5(u, l, r, i0):
-    U = 8
-    L = 50
-    R = 40
-    T = 0
-    START = 4
+    # U = 8
+    # L = 50
+    # R = 40
+    # T = 0
+    # START = 4
 
-    K_d = U / L * e ** (-R/L * T)
-    K_d = U / L * e ** (-R/L * T)
+    # K_d = U / L * e ** (-R/L * T)
+    print('Not implemented yet')
+
+    # K_d = U / L * e ** (-R/L * T)
 
 
 if __name__ == "__main__":
@@ -209,11 +225,13 @@ if __name__ == "__main__":
     solutions = [problem_1, problem_2, problem_3, problem_4, problem_5]
     args = parser.parse_args()
 
-    groups = args.groups.upper()[:5]
-
+    groups = args.groups.upper()
 
     if args.problem:
-        solutions[args.problem - 1](*values[groups[args.problem - 1]])
+        print(f"Solution of problem {args.problem}")
+        solutions[args.problem - 1](*values[args.problem - 1][groups[0]])
     else:
         for i in range(5):
-            solutions[i](*values[groups[i]])
+            print(f"Solution of problem {i + 1}")
+            solutions[i](*values[i][groups[i]])
+            print()
