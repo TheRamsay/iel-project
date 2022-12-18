@@ -1,4 +1,5 @@
 import numpy as np
+from math import pi, atan, atan2, atanh
 from argparse import ArgumentParser
 
 values = [
@@ -37,7 +38,7 @@ values = [
         'B': (25, 40, 11, 15, 100*10**-3, 85*10**-3,  220*10**-6, 95*10**-6,  80),
         'C': (35, 45, 10, 13, 220*10**-3, 70*10**-3,  230*10**-6, 85*10**-6,  75),
         'D': (45, 50, 13, 15, 180*10**-3, 90*10**-3,  210*10**-6, 75*10**-6,  85),
-        'E': (50, 30, 14, 13, 130*10**-3, 60*10**-3,  100*10**-6, 65*10**-6,  90),
+        'E': (5, 3, 14, 13, 130*10**-3, 60*10**-3,  100*10**-6, 65*10**-6,  90),
         'F': (20, 35, 12, 10, 170*10**-3, 80*10**-3,  150*10**-6, 90*10**-6,  65),
         'G': (55, 50, 13, 12, 140*10**-3, 60*10**-3,  160*10**-6, 80*10**-6,  60),
         'H': (65, 60, 10, 10, 160*10**-3, 75*10**-3,  155*10**-6, 70*10**-6,  95),
@@ -189,7 +190,44 @@ def problem_3(u, i1, i2, r1, r2, r3, r4, r5):
     print(f"{ir4=}")
 
 def problem_4(u1, u2, r1, r2, l1, l2, c1, c2, f):
-    print('Not implemented yet')
+    w = 2 * pi * f
+
+    zl1 = complex(0, l1 * w)
+    zl2 = complex(0, l2 * w)
+    zc1 = complex(0, -1/(c1 * w))
+    zc2 = complex(0, -1/(c2 * w))
+
+    a = np.array([
+        [r1 + zl1 + r2 + zl2, zl1 + r2, -zl2],
+        [zl1 + r2, zl1 + r2 + zc1 + zc2, zc1],
+        [-zl2, zc1, zc1 + zl2]
+    ])
+
+    b = np.array([
+        [u1],
+        [0],
+        [u2]
+    ])
+
+    x = np.linalg.solve(a, b)
+    ia, ib, ic = [i[0] for i in x]
+
+    uc2: complex = zc2 * ib
+    uc2_abs: complex = abs(uc2)
+
+    oo = atan2(uc2.imag, uc2.real) * (180/pi)
+    
+    print(f"{w=}")
+    print(f"{zl1=}")
+    print(f"{zl2=}")
+    print(f"{zc1=}")
+    print(f"{zc2=}")
+    print(f"{ia=}")
+    print(f"{ib=}")
+    print(f"{ic=}")
+    print(f"{uc2=}")
+    print(f"{uc2_abs=}")
+    print(f"{oo=}")
 
 def problem_5(u, l, r, i0):
     # U = 8
@@ -205,33 +243,35 @@ def problem_5(u, l, r, i0):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(
-        description="Solve electrical circuits problems for my university course."
-    )
 
-    parser.add_argument(
-        "groups",
-        type=str,
-        help="Example: AACBD"
-    )
+    problem_4(*values[3]["E"])
+    # parser = ArgumentParser(
+    #     description="Solve electrical circuits problems for my university course."
+    # )
 
-    parser.add_argument(
-        "problem",
-        type=int,
-        nargs="?",
-        help="Problem number. Example: 1. If empty, then all problems will be solved."
-    )
+    # parser.add_argument(
+    #     "groups",
+    #     type=str,
+    #     help="Example: AACBD"
+    # )
 
-    solutions = [problem_1, problem_2, problem_3, problem_4, problem_5]
-    args = parser.parse_args()
+    # parser.add_argument(
+    #     "problem",
+    #     type=int,
+    #     nargs="?",
+    #     help="Problem number. Example: 1. If empty, then all problems will be solved."
+    # )
 
-    groups = args.groups.upper()
+    # solutions = [problem_1, problem_2, problem_3, problem_4, problem_5]
+    # args = parser.parse_args()
 
-    if args.problem:
-        print(f"Solution of problem {args.problem}")
-        solutions[args.problem - 1](*values[args.problem - 1][groups[0]])
-    else:
-        for i in range(5):
-            print(f"Solution of problem {i + 1}")
-            solutions[i](*values[i][groups[i]])
-            print()
+    # groups = args.groups.upper()
+
+    # if args.problem:
+    #     print(f"Solution of problem {args.problem}")
+    #     solutions[args.problem - 1](*values[args.problem - 1][groups[0]])
+    # else:
+    #     for i in range(5):
+    #         print(f"Solution of problem {i + 1}")
+    #         solutions[i](*values[i][groups[i]])
+    #         print()
